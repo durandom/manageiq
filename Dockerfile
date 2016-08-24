@@ -99,7 +99,11 @@ RUN ${APPLIANCE_ROOT}/setup && \
     mv /etc/httpd/conf.d/ssl.conf{,.orig} && \
     echo "# This file intentionally left blank. ManageIQ maintains its own SSL configuration" > /etc/httpd/conf.d/ssl.conf && \
     echo "export APP_ROOT=${APP_ROOT}" >> /etc/default/evm && \
-    echo "export CONTAINER=true" >> /etc/default/evm
+    echo "export CONTAINER=true" >> /etc/default/evm && \
+    echo "unset BUNDLE_WITHOUT" >> /etc/default/evm && \
+    echo "unset APPLIANCE" >> /etc/default/evm && \
+    echo "export RAILS_ENV=development" >> /etc/default/evm
+
 
 ## Change workdir to application root, build/install gems
 WORKDIR ${APP_ROOT}
@@ -130,6 +134,8 @@ RUN source /etc/default/evm && \
     # Cleanup install artifacts
     npm cache clean && \
     bower cache clean
+
+RUN bin/setup
 
 ## Copy appliance-initialize script and service unit file
 COPY docker-assets/appliance-initialize.service /usr/lib/systemd/system
