@@ -20,6 +20,9 @@
 
 module EmsRefresh::SaveInventoryNetwork
   def save_ems_network_inventory(ems, hashes, target = nil)
+    SkeletalRefresh::SaveInventory.save_inventory(ems, hashes)
+
+    return ems
     target = ems if target.nil?
     log_header = "EMS: [#{ems.name}], id: [#{ems.id}]"
 
@@ -87,6 +90,7 @@ module EmsRefresh::SaveInventoryNetwork
   end
 
   def save_network_groups_inventory(ems, hashes, target = nil)
+
     target = ems if target.nil?
 
     ems.network_groups(true)
