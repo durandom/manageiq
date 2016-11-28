@@ -15,6 +15,7 @@ class ManageIQ::Providers::Google::NetworkManager < ManageIQ::Providers::Network
   require_nested :SecurityGroup
 
   include ManageIQ::Providers::Google::ManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasCloudManagerMixin
 
   # Auth and endpoints delegations, editing of this type of manager must be disabled
   delegate :authentication_check,

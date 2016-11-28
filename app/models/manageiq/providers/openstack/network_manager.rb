@@ -14,6 +14,13 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   require_nested :SecurityGroup
 
   include ManageIQ::Providers::Openstack::ManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasInfraManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasCloudManagerMixin
+  belongs_to :parent_manager,
+             :foreign_key => :parent_ems_id,
+             # :class_name  => "ManageIQ::Providers::BaseManager",
+             :inverse_of  => :network_manager,
+             :autosave    => true
   include SupportsFeatureMixin
 
   supports :create_floating_ip
@@ -42,6 +49,7 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
            :hostname,
            :default_endpoint,
            :endpoints,
+           :cloud_tenants,
            :to        => :parent_manager,
            :allow_nil => true
 

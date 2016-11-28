@@ -4,6 +4,8 @@ module ManageIQ::Providers
 
     include Inflector::Methods
 
+    # belongs_to :parent_manager, :class_name => 'ManageIQ::Providers::BaseManager'
+
     def self.metrics_collector_queue_name
       self::MetricsCollectorWorker.default_queue_name
     end

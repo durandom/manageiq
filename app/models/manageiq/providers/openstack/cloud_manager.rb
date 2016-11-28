@@ -32,6 +32,12 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include CinderManagerMixin
   include SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasNetworkManagerMixin
+  has_one :network_manager,
+          :foreign_key => :parent_ems_id,
+          # :class_name  => "ManageIQ::Providers::NetworkManager",
+          :autosave    => true,
+          :dependent   => :destroy
 
   supports :provisioning
   supports :cloud_tenant_mapping do
@@ -46,8 +52,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :swift_service
   supports :create_host_aggregate
 
-  before_validation :ensure_managers,
-                    :ensure_cinder_managers,
+  before_validation :ensure_cinder_managers,
                     :ensure_swift_managers
 
   def ensure_network_manager

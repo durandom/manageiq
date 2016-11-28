@@ -15,15 +15,14 @@ class ManageIQ::Providers::Openstack::InfraManager < ::EmsInfra
 
   include ManageIQ::Providers::Openstack::ManagerMixin
   include HasManyOrchestrationStackMixin
-  include HasNetworkManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasNetworkManagerMixin
+
+  has_many :public_networks, :through => :network_manager
+  has_many :private_networks, :through => :network_manager
+  alias_method :all_private_networks, :private_networks
 
   before_save :ensure_parent_provider
   before_destroy :destroy_parent_provider
-  before_validation :ensure_managers
-
-  def ensure_network_manager
-    build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
-  end
 
   def cloud_tenants
     CloudTenant.where(:ems_id => provider.try(:cloud_ems).try(:collect, &:id).try(:uniq))

@@ -27,31 +27,6 @@ module ManageIQ::Providers
 
     alias all_cloud_networks cloud_networks
 
-    belongs_to :parent_manager,
-               :foreign_key => :parent_ems_id,
-               :class_name  => "ManageIQ::Providers::BaseManager",
-               :autosave    => true
-
-    # Relationships delegated to parent manager
-    delegate :availability_zones,
-             :cloud_tenants,
-             :flavors,
-             :cloud_resource_quotas,
-             :cloud_volumes,
-             :cloud_volume_snapshots,
-             :cloud_object_store_containers,
-             :cloud_object_store_objects,
-             :key_pairs,
-             :orchestration_stacks,
-             :orchestration_stacks_resources,
-             :direct_orchestration_stacks,
-             :resource_groups,
-             :vms,
-             :total_vms,
-             :hosts,
-             :to        => :parent_manager,
-             :allow_nil => true
-
     def self.supported_types_and_descriptions_hash
       supported_subclasses.select(&:supports_ems_network_new?).each_with_object({}) do |klass, hash|
         if Vmdb::PermissionStores.instance.supported_ems_type?(klass.ems_type)

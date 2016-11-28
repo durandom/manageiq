@@ -15,15 +15,10 @@ class ManageIQ::Providers::Google::CloudManager < ManageIQ::Providers::CloudMana
   require_nested :Vm
 
   include ManageIQ::Providers::Google::ManagerMixin
+  include ManageIQ::Providers::NetworkManager::HasNetworkManagerMixin
 
   supports :provisioning
   supports :regions
-
-  before_validation :ensure_managers
-
-  def ensure_network_manager
-    build_network_manager(:type => 'ManageIQ::Providers::Google::NetworkManager') unless network_manager
-  end
 
   def self.ems_type
     @ems_type ||= "gce".freeze
