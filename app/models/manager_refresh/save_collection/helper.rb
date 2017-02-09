@@ -62,7 +62,9 @@ module ManagerRefresh::SaveCollection
         inventory_collection.each do |inventory_object|
           hash   = inventory_object.attributes(inventory_collection)
           record = record_index.delete(inventory_object.manager_uuid)
-          # byebug if inventory_collection.association == :configuration_scripts
+          if inventory_collection.association == :configuration_scripts
+            ap inventory_collection.dependencies
+          end
           if record.nil?
             next unless inventory_collection.create_allowed?
             record          = inventory_collection.model_class.create!(hash.except(:id))
