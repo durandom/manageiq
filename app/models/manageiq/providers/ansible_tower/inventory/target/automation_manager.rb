@@ -26,7 +26,7 @@ class ManageIQ::Providers::AnsibleTower::Inventory::Target::AutomationManager < 
       :manager_ref    => [:manager_ref],
       :builder_params => {:manager => @root},
       :dependency_attributes => {
-        :authentications   => [collections[:configuration_script_authentications]],
+        :authentications   => [configuration_script_authentications],
       }
     )
   end
