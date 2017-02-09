@@ -73,6 +73,8 @@ describe ManageIQ::Providers::AnsibleTower::AutomationManager::Refresher do
     expect(automation_manager.inventory_groups.count).to      eq(6)
     expect(automation_manager.configuration_script_sources.count).to eq(6)
     expect(automation_manager.configuration_script_payloads.count).to eq(438)
+    ap Authentication.count
+    ap AuthenticationConfigurationScriptBase.count
     expect(automation_manager.configuration_script_authentications.count).to eq(13)
   end
 
