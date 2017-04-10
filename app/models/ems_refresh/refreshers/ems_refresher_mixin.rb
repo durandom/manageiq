@@ -109,7 +109,6 @@ module EmsRefresh
           # expect collector at <provider>/Inventory/Collector/<target_name>
           memo[target] = "#{provider_module}::Inventory::Collector::#{target.class.name.demodulize}".safe_constantize
         end
-
         if targets_to_collectors.values.all?
           log_header = format_ems_for_logging(ems)
           targets_to_collectors.map do |target, collector_class|
