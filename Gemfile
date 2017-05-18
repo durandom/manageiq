@@ -20,7 +20,8 @@ end
 
 manageiq_plugin "manageiq-automation_engine"
 manageiq_plugin "manageiq-content"
-manageiq_plugin "manageiq-providers-amazon"
+# manageiq_plugin "manageiq-providers-amazon"
+gem "manageiq-providers-amazon", :git => "https://github.com/Ladas/manageiq-providers-amazon", :branch => "miq_rearch_parallel_inventory_saving_test"
 manageiq_plugin "manageiq-providers-azure"
 manageiq_plugin "manageiq-providers-hawkular"
 manageiq_plugin "manageiq-providers-kubernetes"
